@@ -14,27 +14,29 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+    stage('Docker Login') {
             steps {
-                sh 'docker build -t react-app .'
+                withCredentials([usernamePassword(
+                    credentialsId: 'docker-hub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                        echo "Dhamu@123" | docker login -u "dhamu231" --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Build & push  Docker Image') {
+            steps {
+                sh './build.sh'
             }
         }
 
         stage('Tag & Push Docker Image') {
             steps {
-                script {
-                    if (env.BRANCH_NAME == 'dev') {
-                        sh """
-                            docker tag react-app $DOCKER_DEV_REPO:$IMAGE_TAG
-                            docker push $DOCKER_DEV_REPO:$IMAGE_TAG
-                        """
-                    } else if (env.BRANCH_NAME == 'master') {
-                        sh """
-                            docker tag react-app $DOCKER_PROD_REPO:$IMAGE_TAG
-                            docker push $DOCKER_PROD_REPO:$IMAGE_TAG
-                        """
-                    }
-                }
+                sh './deploy.sh'
             }
         }
 
