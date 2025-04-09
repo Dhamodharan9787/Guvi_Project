@@ -14,6 +14,15 @@ pipeline {
             }
         }
 
+    stage('execute permission to scripts'){
+        steps{
+            sh  '''
+            chmod +x build.sh
+            chmod +x deploy.sh
+            '''
+        }
+    }
+
     stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
