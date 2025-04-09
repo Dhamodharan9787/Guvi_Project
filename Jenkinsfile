@@ -45,7 +45,10 @@ pipeline {
 
         stage('Tag & Push Docker Image') {
             steps {
-                sh './deploy.sh'
+                sh '''
+                scp -o StrictHostKeyChecking=no -i/var/lib/jenkins/.ssh/jenkins.pem deploy.sh ubuntu@ip-172-31-9-206:/home/ubuntu/
+                ssh -o StrictHostKeyChecking=no -i/var/lib/jenkins/.ssh/jenkins.pem deploy.sh ubuntu@ip-172-31-9-206 "BRANCH_NAME=$BRANCH_NAME bash deply.sh"
+                ''' }
             }
         }
 
