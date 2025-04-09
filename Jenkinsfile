@@ -25,12 +25,12 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
                         sh """
-                            docker tag myapp $DOCKER_DEV_REPO:$IMAGE_TAG
+                            docker tag react-app $DOCKER_DEV_REPO:$IMAGE_TAG
                             docker push $DOCKER_DEV_REPO:$IMAGE_TAG
                         """
                     } else if (env.BRANCH_NAME == 'master') {
                         sh """
-                            docker tag myapp $DOCKER_PROD_REPO:$IMAGE_TAG
+                            docker tag react-app $DOCKER_PROD_REPO:$IMAGE_TAG
                             docker push $DOCKER_PROD_REPO:$IMAGE_TAG
                         """
                     }
