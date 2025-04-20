@@ -2,8 +2,6 @@
 
 # Variables
 echo "Deployment Branch:$BRANCH_NAME"
-#IMAGE_NAME="dhamu231/react-app"
-
 if  [ "$BRANCH_NAME" = "dev" ]; then
 docker stop react-app || true
 docker rm react-app || true
