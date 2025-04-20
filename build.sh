@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# Variables
-IMAGE_NAME="dhamu231/react-app"
-DEV_TAG="dev"
-PROD_TAG="prod"
+echo "Current Branch: $BRANCH_NAME"
 
-docker login || exit 1
-docker build -t $IMAGE_NAME:$DEV_TAG .
-docker push $IMAGE_NAME:$DEV_TAG
-echo "Push completed"
+if [ "$BRANCH_NAME" == "dev" ]; then
+    docker build -t dhamu231/guvi_dev .
+    #echo "Dhamu@123" | docker login -u "dhamu231" --password-stdin
+    docker push dhamu231/guvi_dev:latest
+
+elif [ "$BRANCH_NAME" == "master" ]; then
+    docker build -t dhamu231/guvi_prod .
+    #echo "Dhamu@123" | docker login -u "dhamu231" --password-stdin
+    docker push dhamu231/guvi_prod:latest
+fi
