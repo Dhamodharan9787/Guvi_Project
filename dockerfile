@@ -1,6 +1,4 @@
-FROM node:18-alpine
-WORKDIR /app
-COPY . .
-RUN npm install
+FROM nginx:alpine
+COPY build /usr/share/ngnix/html
 EXPOSE 80
-CMD ["npm", "start"]
+CMD ["ngnix", "-g", "daemon off;"]
