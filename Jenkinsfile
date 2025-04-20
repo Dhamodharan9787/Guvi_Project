@@ -55,7 +55,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Trigger deployment here based on branch: ${env.BRANCH_NAME}"
+                echo "Trigger deployment based on branch: ${env.BRANCH_NAME}"
             }
         }
     }
